@@ -13,8 +13,9 @@ compare_types = type(numeric_variable) != type(string_variable)
 print(compare_types)
 
 """ 4. конвертировать числовую переменную в строчную"""
-numeric_variable, string_variable = string_variable, numeric_variable
-print(f"Тип переменной 'string_variable' == {type(string_variable)}")
+numeric_variable = str(numeric_variable)
+
+print(f"Тип переменной 'numeric_variable' == {type(numeric_variable)}")
 
 """ 5. Создать список"""
 my_list = list()
@@ -115,10 +116,11 @@ for my_values in variable_dictionary.values():
     print(my_values)
 
 """ 23. Сортировать словарь по ключам """
-for my_keys in sorted(variable_dictionary.keys(), key=str.lower):
-    print(my_keys)
+for key in sorted(variable_dictionary, key=str.lower):
+    print(key, variable_dictionary[key])
+
 
 """ 24. Сортировать словарь по значениям """
-for my_values in sorted(variable_dictionary.values()):
-    print(my_values)
+for key in sorted(variable_dictionary,  key=variable_dictionary.get):
+    print(key, variable_dictionary[key])
 
