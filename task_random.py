@@ -1,43 +1,30 @@
 # -*- coding: utf-8 -*-
 from random import (randrange,
-                    choice,
-                    shuffle)
+                    sample)
 
-def find_random_number():
+def find_random_numer():
     """Find 3 random numbers between 100 and 999 that will be divided by 5"""
-    m = []
-    while True:
-        if len(m)<3:
-            my_random = randrange(100, 999)
-            if my_random % 5 == 0:
-                m.append(my_random)
-        else:
-            return m
+    list_random_numer = []
+    for i in range(3):
+        list_random_numer.append(randrange(100, 999, 5))
+    return list_random_numer
 
-# Generate a string of random 10 number
-def random_characters():
-    str1 = ''
-    for i in range(10):
-        m = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-        shuffle(m)
-        str1 += ''.join(choice(m))
-    return str1
 
-# Generate 100 random lottery tickets (10-digit numbers) and randomly select 2 winning ones
 def casino():
-    my_dict = {}
-    # Generate 100 random lottery tickets
-    for i in range(1, 101):
-        my_dict[i] = random_characters()
-    # randomly select 2 winning
-    winni_one = randrange(1, 100)
-    winni_two = randrange(1, 100)
-    return f"""Первый победитель с билетом  под номером '{winni_one}', с комбинацией '{my_dict[winni_one]}',
-    а также, победил билетом под номером '{winni_two}', с комбинацией '{my_dict[winni_two]}'!"""
+    """Generate a string of random 10 number
+    Generate 100 random lottery tickets (10-digit numbers) and randomly select 2 winning ones"""
+    my_dikt = {}
+    for i in range(100):
+        my_dikt[i] = randrange(1000000000, 1999999999)
+    rez = sample(my_dikt.keys(), 2)
+    winner_one = rez[0]
+    winner_two = rez[1]
+
+    return f"""Первый победитель с билетом  под номером '{winner_one}', с комбинацией '{my_dikt[winner_one]}',
+    а также, победил билет под номером '{winner_two}', с комбинацией '{my_dikt[winner_two]}'!"""
 
 
 if __name__ == "__main__":
-    print(find_random_number())
+    print(find_random_numer())
     print("-----------")
-    # print(random_characters())
     print(casino())
