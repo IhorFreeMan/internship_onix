@@ -1,0 +1,81 @@
+Создать базу данных db_books.
+CREATE DATABASE db_books;
+
+Выбрать ее в качестве базы данных по умолчанию
+USE db_books
+
+Создать таблицу tbl_topics содержащую следующий набор столбцов
+CREATE TABLE 
+    `tbl_topics` (
+        `topic_id` INT(127) NOT NULL UNIQUE,
+        `topic_name` VARCHAR(100) UNIQUE);
+
+
+Структура БД 
+describe tbl_topics;
+
+"Создать таблицу tbl_books для хранения данных о книгах, содержащую следующий набор столбцов:"
+CREATE TABLE 
+    `tbl_books` (
+        `b_id` CHAR(17) NOT NULL PRIMARY KEY,
+        `b_name` VARCHAR(255) NOT NULL,
+        `b_author` VARCHAR(255),
+        `b_topic` INT NOT NULL,
+        `b_price` DECIMAL(5, 2) UNSIGNED);     
+         
+Заполнение бд:
+Добавить в таблицу tbl_topics названия категорий: классика, лирика, мемуары, психология, философия
+INSERT INTO tbl_topics (topic_id, topic_name)
+VALUES (1,'классика');
+
+INSERT INTO tbl_topics (topic_id, topic_name)
+VALUES (2, 'лирика');
+
+INSERT INTO tbl_topics (topic_id, topic_name)
+VALUES (3, 'мемуары');
+
+INSERT INTO tbl_topics (topic_id, topic_name)
+VALUES (4, 'психология');
+
+INSERT INTO tbl_topics (topic_id, topic_name)
+VALUES (5, 'философия');
+
+Показать инф., с таблицы tbl_topics
+SELECT * FROM tbl_topics;
+
+
+Добавить несколько строк в таблицу tbl_books
+INSERT INTO tbl_books (b_id, b_name, b_author, b_topic, b_price)
+VALUES ('9783161484100', 'Три товарища', 'Эрих Мария Ремарк', 1, '19.34');
+
+INSERT INTO tbl_books (b_id, b_name, b_author, b_topic, b_price)
+VALUES ('7783161484100', 'Маленький принц', 'Антуан де Сент-Экзюпери', 1, '60.97');
+
+INSERT INTO tbl_books (b_id, b_name, b_author, b_topic, b_price)
+VALUES ('8783161484100', 'Вино из одуванчиков', 'Рей Брэдбери', 1, '0');
+
+INSERT INTO tbl_books (b_id, b_name, b_author, b_topic, b_price)
+VALUES ('6783161484100', 'Вино из одуванчиков', 'Рей Брэдбери', 1, '0');
+
+INSERT INTO tbl_books (b_id, b_name, b_author, b_topic, b_price)
+VALUES ('4783161484100', 'Атлант расправил плечи', 'Айн Рэнд', 2, '0');
+
+Показать инф., с таблицы tbl_books
+SELECT b_name, b_price FROM tbl_books;
+
+Увеличить стоимость всех книг на 10%
+UPDATE tbl_books SET b_price= b_price+(b_price*10)/100 WHERE b_price > 0;
+
+Удалить все книги, стоимость которых неопределенна.
+DELETE from tbl_books where b_price < 1;
+
+Объединить таблицы
+SELECT tbl_books.b_name,
+       tbl_books.b_author, 
+       tbl_books.b_price, 
+       tbl_topics.topic_name  
+       FROM tbl_books 
+       LEFT JOIN tbl_topics on tbl_books.b_topic = tbl_topics.topic_id;
+
+
+Дамп делал через MySQL Workbench 
