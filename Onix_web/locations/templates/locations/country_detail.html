@@ -1,0 +1,28 @@
+{% extends "locations/base.html" %}
+
+
+{% block content %}
+<title>{% block title %}City{% endblock %}</title>
+<body>
+
+    {% if category_list_city %}
+        <h1 class="mt-5">{{ country_list.name }}</h1>
+        <p>{{ country_list.description|truncatewords_html:80 }}</p>
+        <p>population: {{ country_list.population }}</p>
+        <p>City: </p>
+            {% for city in category_list_city %}
+                <table border="1" width="20%" cellpadding="5">
+                  <tr>
+                    <td> <a href="{% url 'city_detail' city.id %}">{{ city }}</a> </td>
+                  </tr>
+                </table>
+            {% endfor %}
+
+    {% else %}
+        <strong>There are no categories present.</strong>
+    {% endif %}
+</body>
+{% endblock content %}
+{% block sidebar %}
+    <img class="mt-5" src="{{country_list.flag.image.url}}" width="400" height="200"/><br>
+{% endblock %}

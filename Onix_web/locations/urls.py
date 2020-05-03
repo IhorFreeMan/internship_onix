@@ -2,10 +2,11 @@
 from django.urls import path
 from locations import views
 
-
 urlpatterns = [
-    path('test_views/', views.test_views),
-    path('test_views_one/<str:add_something>', views.test_views_one),
+    path("", views.country_directory, name='country_directory'),
+    path('country_detail=<int:id_city>', views.country_detail, name='country_detail'),
+    path('city_detail=<int:id>', views.city_detail, name='city_detail'),
+    path('delete_city=<int:id>', views.delete_city, name='delete_city'),
 ]
 
 

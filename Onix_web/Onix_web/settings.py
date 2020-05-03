@@ -34,14 +34,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'locations.apps.LocationsConfig', # подключить locations
-
+    'index.apps.IndexConfig',
+    'accounts.apps.AccountsConfig',
+    'crispy_forms',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +62,7 @@ ROOT_URLCONF = 'Onix_web.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -132,7 +135,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
-    # 'bootstrap',
     os.path.join(BASE_DIR, 'static/bootstrap'),
  ]
 
@@ -141,4 +143,8 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
+LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

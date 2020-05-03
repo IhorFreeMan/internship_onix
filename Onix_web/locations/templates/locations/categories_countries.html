@@ -1,0 +1,18 @@
+{% extends "locations/base.html" %}
+
+{% block content %}
+<title>{% block title %}Country{% endblock %}</title>
+<body>
+<h1 class="mt-4">List countries: </h1>
+
+    {% if categories %}
+        <ul>
+            {% for countries in categories %}
+                <li><a href="{% url 'country_detail' countries.pk %}">{{ countries.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no categories present.</strong>
+    {% endif %}
+
+{% endblock content %}
