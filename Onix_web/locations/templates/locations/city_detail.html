@@ -1,16 +1,15 @@
 {% extends "locations/base.html" %}
 
-
 {% block content %}
 <title>{% block title %}City{% endblock %}</title>
 <body>
 
-{% for city in  city_detail %}
     <h1 class="mt-4"> {{ city.name }} </h1>
     <p class="date">Geographical coordinates: (latitude - {{ city.latitude }}, longitude - {{ city.longitude }}) </p>
-    <a type="button" class="btn btn-secondary btn-lg btn-block"  href="{% url 'delete_city' city.id %}">delete city {{ city.name }}</a>
 
-{% endfor %}
+
+
+    <a type="button" class="btn btn-secondary btn-lg btn-block"  href="{% url 'locations:delete_city' city.id %}">delete city {{ city.name }}</a>
 
 </body>
 {% endblock content %}

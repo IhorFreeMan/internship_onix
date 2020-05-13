@@ -1,0 +1,11 @@
+{% extends "locations/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1 class="mt-4">Edit city</h1>
+
+<form action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-primary btn-block" type="submit">Update</button>
+</form>
+{% endblock content %}

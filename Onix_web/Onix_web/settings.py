@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'crispy_forms',
     'django.contrib.admin',
+    
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'locations.middleware.MyTestMiddleware',
 ]
 
 ROOT_URLCONF = 'Onix_web.urls'

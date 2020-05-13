@@ -4,25 +4,29 @@
 {% block content %}
 <title>{% block title %}City{% endblock %}</title>
 <body>
+    <h1 class="mt-5">{{ country.name}}</h1>
+    <p>{{ country.description|truncatewords_html:80 }}</p>
+    <h5>population: {{ country.population }}</h5>
+    <table  class="table">
+    <thead>
+    <tr>
+      <th scope="col">City: </th>
+      <th scope="col"> </th>
+    </tr>
+  </thead>
+    {% for city in country.city_set.all %}
+        <tr>
+            <th scope="col"> <a href="{% url 'locations:city_detail' city.id %}">{{ city }}</a> </th>
+            <td scope="col"> <a href="{% url 'locations:edit_city' city.pk %}"><span class="oi oi-pencil"></span>edit</a> </td>
+        </tr>
+    {% endfor %}
+    </table>
 
-    {% if category_list_city %}
-        <h1 class="mt-5">{{ country_list.name }}</h1>
-        <p>{{ country_list.description|truncatewords_html:80 }}</p>
-        <p>population: {{ country_list.population }}</p>
-        <p>City: </p>
-            {% for city in category_list_city %}
-                <table border="1" width="20%" cellpadding="5">
-                  <tr>
-                    <td> <a href="{% url 'city_detail' city.id %}">{{ city }}</a> </td>
-                  </tr>
-                </table>
-            {% endfor %}
+    <a type="button" class="btn btn-primary btn-lg btn-block"  href="{% url 'locations:add_city' %}">Add city</a>
 
-    {% else %}
-        <strong>There are no categories present.</strong>
-    {% endif %}
+
 </body>
 {% endblock content %}
 {% block sidebar %}
-    <img class="mt-5" src="{{country_list.flag.image.url}}" width="400" height="200"/><br>
+    <img class="mt-5" src="{{country.flag.image.url}}" width="400" height="200"/><br>
 {% endblock %}

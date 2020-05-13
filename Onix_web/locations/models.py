@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.conf import settings
-from django.db.models.signals import post_save, post_delete, pre_delete, post_init, pre_init, pre_save
+from django.db.models.signals import post_save, post_delete, pre_delete, pre_save
 from django.dispatch import receiver
 
 
