@@ -85,7 +85,6 @@ def edit_city(request, id):
     if request.method == 'POST':
         if form.is_valid():
             city = form.save(commit=False)
-            city.author = request.user
             city.save()
             return redirect('locations:city_detail', city.pk)
     else:

@@ -19,12 +19,20 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('locations/', include('locations.urls', namespace='locations')),
     path('', include('index.urls')),
     path('account/', include('accounts.urls')),
 ]
+
+#  REST framework's
+urlpatterns += [
+    path('api/', include('locations_api.urls', namespace='locations_api')),
+    path('my_auth/', include('rest_framework.urls'))
+]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
