@@ -2,26 +2,28 @@
 {% load locatios_tag %}
 
 {% block content %}
-<title>{% block title %}Country{% endblock %}</title>
-    <table  class="table mt-4">
+    <title>{% block title %}Country{% endblock %}</title>
+    <table class="table mt-4">
 
         <thead>
-            <tr>
-                <th scope="col"> <h1>List countries </h1> </th>
-                <th scope="col"> </th>
-            </tr>
+        <tr>
+            <th scope="col"><h1>List countries </h1></th>
+            <th scope="col"></th>
+        </tr>
         </thead>
         {% for countries in categories %}
-           <tr>
-                <th scope="col"><li><a href="{% url 'locations:country_detail' countries.pk %}">{{ countries.name }}</a></li></th>
+            <tr>
+                <th scope="col">
+                    <li><a href="{% url 'locations:country_detail' countries.pk %}">{{ countries.name }}</a></li>
+                </th>
                 <td scope="col"><a href="{% url 'locations:edit_country' countries.pk %}">edit</a></td>
-           </tr>
+            </tr>
 
         {% endfor %}
 
     </table>
 
-    <a type="button" class="btn btn-primary btn-lg btn-block"  href="{% url 'locations:add_country' %}">Add country</a>
+    <a type="button" class="btn btn-primary btn-lg btn-block" href="{% url 'locations:add_country' %}">Add country</a>
 
 {% endblock content %}
 {% block sidebar %}

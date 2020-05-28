@@ -3,42 +3,42 @@
 
 {% block page %}
     <h1 class="mt-4"></h1>>
-<div class="container">
-  <div class="row">
-    <div class="col">
-{% comment %}      1 из 2{% endcomment %}
-    </div>
-    <div class="col">
-{% comment %}      2 из 2{% endcomment %}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      {% comment %}1 из 3{% endcomment %}
-    </div>
-    <div class="col">
-      {% comment %}2 из 3{% endcomment %}
-        <div class="card">
-            <div class="card-body">
-            <h4 class="card-title ">Log in to your account</h4>
-
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ next }}">
-
-                {{ form|crispy }}
-
-                <button type="submit" class="btn btn-primary btn-block">Log in</button>
-            </form>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% comment %}      1 из 2{% endcomment %}
+            </div>
+            <div class="col">
+                {% comment %}      2 из 2{% endcomment %}
             </div>
         </div>
-        {% comment %}{% endcomment %}
+        <div class="row">
+            <div class="col">
+                {% comment %}1 из 3{% endcomment %}
+            </div>
+            <div class="col">
+                {% comment %}2 из 3{% endcomment %}
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title ">Log in to your account</h4>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ next }}">
+
+                            {{ form|crispy }}
+
+                            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                        </form>
+                    </div>
+                </div>
+                {% comment %}{% endcomment %}
+            </div>
+            <div class="col">
+                {% comment %}3 из 3{% endcomment %}
+            </div>
+        </div>
     </div>
-    <div class="col">
-      {% comment %}3 из 3{% endcomment %}
-    </div>
-  </div>
-</div>
 
 
 {% endblock %}

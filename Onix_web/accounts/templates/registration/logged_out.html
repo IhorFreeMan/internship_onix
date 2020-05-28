@@ -1,30 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<br>
-<br>
+    <br>
+    <br>
 
-
-<div class="container">
-  <div class="row">
-    <div class="col">
-{% comment %}      1 из 2{% endcomment %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% comment %}      1 из 2{% endcomment %}
+            </div>
+            <div class="col">
+                {% comment %}     2 из 2{% endcomment %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% comment %}     1 из 3{% endcomment %}
+            </div>
+            <div class="col">
+                <h2 class="mt-4">You are logged out!</h2>
+                <a href="{% url 'login' %}">Log in again</a>
+            </div>
+            <div class="col">
+                {% comment %}      3 из 3{% endcomment %}
+            </div>
+        </div>
     </div>
-    <div class="col">
- {% comment %}     2 из 2{% endcomment %}
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
- {% comment %}     1 из 3{% endcomment %}
-    </div>
-    <div class="col">
-      <h2 class="mt-4">You are logged out!</h2>
-        <a  href="{% url 'login' %}">Log in again</a>
-    </div>
-    <div class="col">
-{% comment %}      3 из 3{% endcomment %}
-    </div>
-  </div>
-</div>
 {% endblock %}

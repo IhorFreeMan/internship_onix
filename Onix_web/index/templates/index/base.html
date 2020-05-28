@@ -3,27 +3,27 @@
 
 
 {% block page %}
-  <!-- Page Content -->
-  <div class="container">
-    <div class="row">
-      <!-- Post Content Column -->
-      <div class="col-lg-8">
-          	{% block content %}	{% endblock %}
-      </div>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Post Content Column -->
+            <div class="col-lg-8">
+                {% block content %}    {% endblock %}
+            </div>
 
-      <!-- Sidebar Widgets Column -->
-      <div class="col-md-4">
-            {% block sidebar %}
+            <!-- Sidebar Widgets Column -->
+            <div class="col-md-4">
+                {% block sidebar %}
 
 
-            {% endblock %}
-      </div>
+                {% endblock %}
+            </div>
+
+        </div>
+        <!-- /.row -->
 
     </div>
-    <!-- /.row -->
-
-  </div>
-  <!-- /.container -->
+    <!-- /.container -->
     <div style="padding: 15px;"></div>
 
 {% endblock page %}

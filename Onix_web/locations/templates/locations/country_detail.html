@@ -2,31 +2,31 @@
 
 
 {% block content %}
-<title>{% block title %}City{% endblock %}</title>
-<body>
-    <h1 class="mt-5">{{ country.name}}</h1>
+    <title>{% block title %}City{% endblock %}</title>
+    <body>
+    <h1 class="mt-5">{{ country.name }}</h1>
     <p>{{ country.description|truncatewords_html:80 }}</p>
     <h5>population: {{ country.population }}</h5>
-    <table  class="table">
-    <thead>
-    <tr>
-      <th scope="col">City: </th>
-      <th scope="col"> </th>
-    </tr>
-  </thead>
-    {% for city in country.city_set.all %}
+    <table class="table">
+        <thead>
         <tr>
-            <th scope="col"> <a href="{% url 'locations:city_detail' city.id %}">{{ city }}</a> </th>
-            <td scope="col"> <a href="{% url 'locations:edit_city' city.pk %}"><span class="oi oi-pencil"></span>edit</a> </td>
+            <th scope="col">City:</th>
+            <th scope="col"></th>
         </tr>
-    {% endfor %}
+        </thead>
+        {% for city in country.city_set.all %}
+            <tr>
+                <th scope="col"><a href="{% url 'locations:city_detail' city.id %}">{{ city }}</a></th>
+                <td scope="col"><a href="{% url 'locations:edit_city' city.pk %}"><span class="oi oi-pencil"></span>edit</a>
+                </td>
+            </tr>
+        {% endfor %}
     </table>
 
-    <a type="button" class="btn btn-primary btn-lg btn-block"  href="{% url 'locations:add_city' %}">Add city</a>
+    <a type="button" class="btn btn-primary btn-lg btn-block" href="{% url 'locations:add_city' %}">Add city</a>
 
-
-</body>
+    </body>
 {% endblock content %}
 {% block sidebar %}
-    <img class="mt-5" src="{{country.flag.image.url}}" width="400" height="200"/><br>
+    <img class="mt-5" src="{{ country.flag.image.url }}" width="400" height="200"/><br>
 {% endblock %}

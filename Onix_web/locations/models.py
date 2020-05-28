@@ -8,6 +8,7 @@ from django.dispatch import receiver
 class Symbol(models.Model):
     image = models.ImageField(upload_to='country/%Y/%m/%d/')
 
+
 class Country(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)

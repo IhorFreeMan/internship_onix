@@ -2,13 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1 class="mt-4">Information about country</h1>
+    <h1 class="mt-4">Information about country</h1>
 
-<form action="{% url 'locations:add_country' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form_flag|crispy}}
-    {{ form|crispy }}
-    <button class="btn btn-primary btn-block" type="submit">Upload</button>
-</form>
+    <form action="{% url 'locations:add_country' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form_flag|crispy }}
+        {{ form|crispy }}
+        <button class="btn btn-primary btn-block" type="submit">Upload</button>
+    </form>
 {% endblock content %}
 

@@ -1,11 +1,11 @@
 {% extends "locations/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h1 class="mt-4">Information about city</h1>
+    <h1 class="mt-4">Information about city</h1>
 
-<form action="{% url 'locations:add_city' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button class="btn btn-primary btn-block" type="submit">Upload</button>
-</form>
+    <form action="{% url 'locations:add_city' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary btn-block" type="submit">Upload</button>
+    </form>
 {% endblock content %}

@@ -2,8 +2,8 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <h1 class="mt-5">Welcome to site {{user.username}}</h1>
-        {% else %}
+        <h1 class="mt-5">Welcome to site {{ user.username }}</h1>
+    {% else %}
         <h1 class="mt-5">Please sign in to view the site’s content.</h1>
     {% endif %}
 

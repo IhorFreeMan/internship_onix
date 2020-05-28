@@ -42,8 +42,8 @@ def add_country(request):
     if request.method == 'POST':
         form = AddCountryForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            country = form.save(commit=False)
-            country.save()
+            country = form.save()
+            country.users.add(request.user)
             return redirect('locations:country_directory')
     else:
         form = AddCountryForm
