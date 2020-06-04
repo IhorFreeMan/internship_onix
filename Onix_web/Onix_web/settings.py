@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'locations_api.apps.LocationsApiConfig',
     'django_filters',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -168,13 +169,32 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser'
     ],
+
 }
 # rest end
+
+
+# Authorization
+# https://jpadilla.github.io/django-rest-framework-jwt/
+import datetime
+JWT_AUTH = {
+
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3000),
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+
+}
+# jwt end
+

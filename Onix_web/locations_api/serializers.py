@@ -46,3 +46,12 @@ class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ['name', 'country', 'longitude', 'latitude']
+
+
+class UserAddSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email',  'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+
