@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from config import (MY_SECRET_KEY,
-                    MYSQL_DATABASES)
+                    MYSQL_DATABASES,
+                    MY_EMAIL_HOST,
+                    MY_EMAIL_HOST_USER,
+                    MY_EMAIL_HOST_PASSWORD,
+                    MY_EMAIL_PORT,
+                    MY_EMAIL_USE_TLS)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
     'locations_api.apps.LocationsApiConfig',
     'django_filters',
     'drf_yasg',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -168,10 +174,11 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     ],
@@ -198,3 +205,17 @@ JWT_AUTH = {
 }
 # jwt end
 
+# отправка почты mail
+EMAIL_HOST = MY_EMAIL_HOST
+EMAIL_HOST_USER = MY_EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = MY_EMAIL_HOST_PASSWORD
+EMAIL_PORT = MY_EMAIL_PORT
+EMAIL_USE_TLS = MY_EMAIL_USE_TLS
+# END mail
+
+
+
+# RebbitMQ
+BROKER_URL = 'amqp://guest:guest@localhost:5672/'
+CELERY_BROKER_URL = 'amqp://localhost'
+# RebbitMQ end

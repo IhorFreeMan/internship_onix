@@ -50,3 +50,5 @@ def city_del_signal(sender, instance, **kwargs):
 @receiver(post_delete, sender=City)
 def city_post_del_signal(sender, instance, **kwargs):
     print(f"Город {instance} удален ")
+
+

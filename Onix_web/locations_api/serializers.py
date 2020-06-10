@@ -36,7 +36,7 @@ class CountryAddSerializer(serializers.ModelSerializer):
 
 
 class CountryDetailSerializer(serializers.ModelSerializer):
-    users = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault(), many=True)
+    # users = serializers.PrimaryKeyRelatedField(read_only=True, default=serializers.CurrentUserDefault(), many=True)
     class Meta:
         model = Country
         exclude = ['cities_count']
@@ -49,7 +49,7 @@ class CitySerializer(serializers.ModelSerializer):
 
 
 class UserAddSerializer(serializers.ModelSerializer):
-    class Meta(object):
+    class Meta:
         model = User
         fields = ('id', 'username', 'first_name', 'last_name', 'email',  'password')
         extra_kwargs = {'password': {'write_only': True}}

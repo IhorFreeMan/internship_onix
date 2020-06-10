@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.contrib.auth import user_logged_in
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.decorators import api_view
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_403_FORBIDDEN
-from rest_framework_jwt.serializers import jwt_payload_handler
-import jwt
 from locations.models import Country, City
 from rest_framework import viewsets, generics
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from locations_api.serializers import (CountriesSerializer,
-    CountryAddSerializer, CountryDetailSerializer, CitySerializer, UserAddSerializer)
-from django.conf import settings
-
+                                       CountryAddSerializer, CountryDetailSerializer, CitySerializer, UserAddSerializer)
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
 from rest_framework.utils import json
@@ -20,7 +14,7 @@ from rest_framework.response import Response
 import requests
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
-
+from locations_api.tasks import country_created, country_update
 
 
 class CountryListView(generics.ListAPIView):
@@ -35,12 +29,36 @@ class CountryAddView(generics.CreateAPIView):
     serializer_class = CountryAddSerializer
     permission_classes = [IsAuthenticated]
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            country = serializer.save()
+            task = country_created.delay(request.user.email)
+            return Response({'task': request.user.email})
+        else:
+            return Response({"error": serializer.errors})
+
+
 
 class CountryDetailView(generics.RetrieveUpdateDestroyAPIView):
     """Update Destroy Country"""
     queryset = Country.objects.all()
     serializer_class = CountryDetailSerializer
     permission_classes = [IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+
+        if serializer.is_valid():
+            country = serializer.save()
+            my_url = str(request.get_host()) + str(request.path)
+            task = country_update.delay(request.user.email, country.name, my_url)
+
+        self.perform_update(serializer)
+        return Response(serializer.data)
+
 
 
 class CityAddView(viewsets.ModelViewSet):
@@ -55,36 +73,6 @@ class CityAddView(viewsets.ModelViewSet):
 class CreateUserAPIView(generics.CreateAPIView):
     """Create User"""
     serializer_class = UserAddSerializer
-
-
-@api_view(['POST'])
-def authenticate_user(request):
-    try:
-        email = request.data['email']
-        password = request.data['password']
-
-        user = User.objects.get(email=email, password=password)
-        if user:
-            try:
-                payload = jwt_payload_handler(user)
-                token = jwt.encode(payload, settings.SECRET_KEY)
-                user_details = {}
-                user_details['name'] = "%s %s" % (
-                    user.first_name, user.last_name)
-                user_details['token'] = token
-                user_logged_in.send(sender=user.__class__,
-                                    request=request, user=user)
-                return Response(user_details, status=HTTP_200_OK)
-
-            except Exception as e:
-                raise e
-        else:
-            res = {
-                'error': 'can not authenticate with the given credentials or the account has been deactivated'}
-            return Response(res, status=HTTP_403_FORBIDDEN)
-    except KeyError:
-        res = {'error': 'please provide a email and a password'}
-        return Response(res)
 
 
 class UserRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
@@ -114,7 +102,7 @@ class UserRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
 
 class GoogleView(APIView):
     def post(self, request):
-        payload = {'access_token': request.data.get("token")}  # validate the token
+        payload = {'access_token': request.data.get("token")}
         r = requests.get('https://www.googleapis.com/oauth2/v2/userinfo', params=payload)
         data = json.loads(r.text)
 
@@ -122,18 +110,16 @@ class GoogleView(APIView):
             content = {'message': 'wrong google token / this google token is already expired.'}
             return Response(content)
 
-        # create user if not exist
         try:
             user = User.objects.get(email=data['email'])
         except User.DoesNotExist:
             user = User()
             user.username = data['email']
-            # provider random default password
             user.password = make_password(BaseUserManager().make_random_password())
             user.email = data['email']
             user.save()
 
-        token = RefreshToken.for_user(user)  # generate token without username & password
+        token = RefreshToken.for_user(user)
         response = {}
         response['username'] = user.username
         response['access_token'] = str(token.access_token)
